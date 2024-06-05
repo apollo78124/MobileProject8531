@@ -1,0 +1,94 @@
+{
+    "users" : [
+        {
+          "userID": 1,
+          "userName": "nurse1",
+          "password": "password1",
+          "role": "Nurse",
+          "fullName": "Nurse One",
+          "tasks" : [
+            {
+              "taskID": 1,
+              "clientName": "John Doe",
+              "location": {
+                "locationID": 1,
+                "city": "Cityville",
+                "street": "123 Main Street",
+                "province": "Stateville",
+                "postalCode": "12345"
+              },
+              "statusID": 3,
+              "taskTypeID": 1,
+              "scheduledDateTime": "2023-11-09T10:00:00Z",
+              "createdDateTime": "2023-11-01T08:30:00Z"
+            }
+          ],
+          "reminders": []
+        },
+        {
+          "userID": 2,
+          "userName": "nurse2",
+          "password": "password2",
+          "role": "Nurse",
+          "fullName": "Nurse Two",
+          "tasks" : [],
+          "reminders": []
+        }
+      ],
+    "locations" : [
+        {
+          "locationID": 1,
+          "city": "Cityville",
+          "street": "123 Main Street",
+          "province": "Stateville",
+          "postalCode": 12345
+        },
+        {
+          "locationID": 2,
+          "city": "Townsville",
+          "street": "456 Oak Avenue",
+          "province": "Stateville",
+          "postalCode": 56789
+        }
+      ],
+
+    "taskStatuses" : [
+        {
+          "statusID": 1,
+          "name": "Pending",
+          "description": "Task has not started"
+        },
+        {
+          "statusID": 2,
+          "name": "In Progress",
+          "description": "Task is currently in progress"
+        },
+        {
+          "statusID": 3,
+          "name": "Completed",
+          "description": "Task has been completed"
+        }
+      ],
+      "taskTypes" : [
+        {
+          "taskTypeID": 1,
+          "name": "Medical Checkup",
+          "description": "Routine medical examination"
+        },
+        {
+          "taskTypeID": 2,
+          "name": "Medication Administration",
+          "description": "Administering prescribed medications"
+        },
+        {
+          "taskTypeID": 3,
+          "name": "Physical Therapy",
+          "description": "Physical rehabilitation exercises"
+        },
+        {
+          "taskTypeID": 4,
+          "name": "Home Visit",
+          "description": "Visit to the patient's home"
+        }
+      ]
+}
