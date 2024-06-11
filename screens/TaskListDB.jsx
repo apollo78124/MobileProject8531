@@ -251,12 +251,14 @@ const TaskListDB = ({navigation}) => {
         <TextInput
           style={styles.filterInput}
           placeholder="Filter by client name"
+          maxLength={30}
           value={clientNameFilter}
           onChangeText={setClientNameFilter}
         />
         <TextInput
           style={styles.filterInput}
           placeholder="Filter by address (city/street)"
+          maxLength={100}
           value={addressFilter}
           onChangeText={setAddressFilter}
         />
