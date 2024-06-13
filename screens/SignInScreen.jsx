@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
+import { PERMISSIONS, request, check, RESULTS } from 'react-native-permissions';
 import Logo from '../assets/logo.png';
 import {users, getEmployees} from '../mockData/mockData';
 import {UserContext} from '../UserContext';
@@ -17,13 +18,25 @@ const SignInScreen = ({navigation}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const {signIn} = useContext(UserContext);
+  const [permissionStatus, setPermissionStatus] = useState(null);
 
   // useEffect to reset the state when the component mounts
   useEffect(() => {
     // Reset the state when the component mounts
     setUsername('');
     setPassword('');
+    checkPermission();
   }, []);
+
+  const checkPermission = async () => {
+    const result = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION); // Change this line if you're on iOS
+    setPermissionStatus(result);
+  };
+
+  const requestPermission = async () => {
+    const result = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION); // Change this line if you're on iOS
+    setPermissionStatus(result);
+  };
 
   const onPressLogin = async () => {
     let foundUser = await signIn({username, password});
@@ -33,7 +46,18 @@ const SignInScreen = ({navigation}) => {
       console.log(
         'Logged-in user: ' + foundUser.userName + ' / ' + foundUser.password,
       );
-      navigation.navigate('Home', {user: foundUser});
+      checkPermission();
+
+      if (permissionStatus === RESULTS.DENIED) {
+        requestPermission();
+      } else if (permissionStatus === RESULTS.BLOCKED) {
+        Alert.alert(
+          'Permission Blocked',
+          'Location permission is blocked. Please enable it from settings.'
+        );
+      } else {
+          navigation.navigate('Home', {user: foundUser});
+      }
       // add to save that users for firebase use!
     } else {
       // Display an error message for unsuccessful login

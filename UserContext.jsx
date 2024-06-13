@@ -36,6 +36,9 @@ export const UserProvider = ({children}) => {
         });
         console.log('USER DOC: ', userDoc);
         setUser(userDoc);
+
+        
+
         return userDoc;
       } else {
         console.log('No matching user.');
@@ -49,6 +52,10 @@ export const UserProvider = ({children}) => {
 
   const signOut = () => {
     setUser(null);
+  };
+
+  const setUserLocation = (name) => {
+     
   };
 
   return (
