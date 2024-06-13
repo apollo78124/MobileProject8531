@@ -6,6 +6,7 @@ import TaskListDB from './TaskListDB';
 import TaskDetailsScreen from './TaskDetailsScreen'; // Make sure this component exists
 import AddTaskScreen from './AddTaskScreen';
 import SettingScreen from './SettingScreen';
+import ContactOthersScreen from './ContactOthers';
 import RemindersList from './RemindersList';
 import ReminderDetailsScreen from './ReminderDetailsScreen'; // Make sure this component exists
 import AddReminderScreen from './AddReminderScreen';
@@ -203,6 +204,12 @@ const HomeScreen = ({navigation}) => {
         <Tab.Screen
           name="Settings"
           component={Settings}
+          initialParams={{user: user}}
+        />
+        
+        <Tab.Screen
+          name="Contact"
+          component={ContactOthersScreen}
           initialParams={{user: user}}
         />
       </Tab.Navigator>
