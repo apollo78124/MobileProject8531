@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {collection, addDoc, Timestamp} from 'firebase/firestore';
 import {db} from '../mockData/config';
+import {performWithRetry} from '../mockData/mockData';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {UserContext} from '../UserContext';
 import Voice from '@react-native-voice/voice';
@@ -82,12 +83,12 @@ const AddReminderScreen = ({navigation}) => {
     }
 
     try {
-      await addDoc(collection(db, 'reminders'), {
-        message: title,
-        date_at: firestoreTimestamp,
-        user: user.id,
-        gif: gifUrl,
-      });
+        await performWithRetry(() => addDoc(collection(db, 'reminders'), {
+           message: title,
+           date_at: firestoreTimestamp,
+           user: user.id,
+           gif: gifUrl,
+         }));
       Alert.alert('Success', 'Reminder added successfully');
       navigation.goBack();
     } catch (error) {

@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {doc, updateDoc, Timestamp} from 'firebase/firestore';
 import {db} from '../mockData/config';
+import {performWithRetry} from '../mockData/mockData';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 const ReminderDetailsScreen = ({route, navigation}) => {
@@ -49,10 +50,10 @@ const ReminderDetailsScreen = ({route, navigation}) => {
     }
 
     try {
-      await updateDoc(reminderRef, {
-        message: title,
-        date_at: firestoreTimestamp,
-      });
+      await performWithRetry(() => updateDoc(reminderRef, {
+       message: title,
+       date_at: firestoreTimestamp,
+     }));
       Alert.alert('Success', 'Reminder updated successfully');
       navigation.goBack();
     } catch (error) {

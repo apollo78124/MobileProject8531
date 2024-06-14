@@ -8,6 +8,7 @@ import {
   Image,
 } from 'react-native';
 import {db} from '../mockData/config'; // Ensure this points to your Firebase configuration file
+import {performWithRetry} from '../mockData/mockData';
 import {collection, query, where, getDocs} from 'firebase/firestore';
 import {UserContext} from '../UserContext';
 import {useFocusEffect} from '@react-navigation/native';
@@ -28,7 +29,7 @@ const RemindersList = ({navigation}) => {
         collection(db, 'reminders'),
         where('user', '==', user.id),
       );
-      const querySnapshot = await getDocs(q);
+      const querySnapshot = await performWithRetry(() => getDocs(q));
       const fetchedReminders = querySnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data(),

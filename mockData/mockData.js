@@ -235,3 +235,23 @@ export const editTask = newTask => {
   foundTask.employee = newTask.employee;
   foundTask.scheduledDateTime = newTask.scheduledDateTime;
 };
+
+export const performWithRetry = async (asyncFunc, maxRetries = 5, delay = 1000) => {
+  let attempts = 0;
+
+  while (attempts < maxRetries) {
+    try {
+      return await asyncFunc();
+    } catch (error) {
+      attempts++;
+      if (attempts >= maxRetries) {
+        throw error;
+      }
+
+      console.log(`Retrying operation... attempt ${attempts}`);
+
+      // Exponential backoff delay
+      await new Promise((resolve) => setTimeout(resolve, delay * Math.pow(2, attempts)));
+    }
+  }
+};

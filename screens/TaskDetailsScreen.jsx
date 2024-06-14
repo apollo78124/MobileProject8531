@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import {UserContext} from '../UserContext';
 import {db} from '../mockData/config'; // Make sure this points to your Firebase configuration file
+import {performWithRetry} from '../mockData/mockData';
 import {
   doc,
   collection,
@@ -121,11 +122,10 @@ const TaskDetailsScreen = ({route, navigation}) => {
   const handleTaskHandover = async () => {
     try {
       // Update the task's employeeID to the selected user's ID
-      const taskRef = doc(db, 'tasks', task.id);
-      await updateDoc(taskRef, {
-        employeeID: selectedUser,
-      });
-
+     const taskRef = await performWithRetry(() => doc(db, 'tasks', task.id));
+      await performWithRetry(() => updateDoc(taskRef, {
+       employeeID: selectedUser,
+     }));
       Alert.alert('Success', 'Task handed over successfully');
       navigation.goBack();
     } catch (error) {
