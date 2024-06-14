@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {UserContext} from '../UserContext';
 import {db} from '../mockData/config';
+import {performWithRetry} from '../mockData/mockData';
 import {collection, getDocs, addDoc, Timestamp} from 'firebase/firestore';
 import {Picker} from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -101,14 +102,14 @@ const AddTaskScreen = ({navigation}) => {
     }
 
     try {
-      await addDoc(collection(db, 'tasks'), {
-        clientName,
-        locationID: selectedLocationId,
-        taskTypeID: selectedTaskTypeId,
-        taskStatusID: selectedStatusId,
-        employeeID: user.id,
-        scheduledDateTime: timestamp, // Use the combined date and time
-      });
+      await performWithRetry(() => addDoc(collection(db, 'tasks'), {
+           clientName,
+           locationID: selectedLocationId,
+           taskTypeID: selectedTaskTypeId,
+           taskStatusID: selectedStatusId,
+           employeeID: user.id,
+           scheduledDateTime: timestamp, // Use the combined date and time
+         }));
       Alert.alert('Success', 'Task added successfully');
       navigation.goBack();
     } catch (error) {
