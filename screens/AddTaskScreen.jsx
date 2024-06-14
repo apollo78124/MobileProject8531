@@ -22,9 +22,9 @@ const AddTaskScreen = ({navigation}) => {
   const [taskTypes, setTaskTypes] = useState([]);
   const [taskStatuses, setTaskStatuses] = useState([]);
   const [clientName, setClientName] = useState('');
-  const [selectedLocationId, setSelectedLocationId] = useState('');
-  const [selectedTaskTypeId, setSelectedTaskTypeId] = useState('');
-  const [selectedStatusId, setSelectedStatusId] = useState('');
+  const [selectedLocationId, setSelectedLocationId] = useState(1);
+  const [selectedTaskTypeId, setSelectedTaskTypeId] = useState(1);
+  const [selectedStatusId, setSelectedStatusId] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
 
   // State to store the scheduled date and time

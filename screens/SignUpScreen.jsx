@@ -15,6 +15,7 @@ const SignUpScreen = ({navigation}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
+  const [phone, setPhone] = useState('');
 
   const handleSignUp = async () => {
     try {
@@ -22,6 +23,7 @@ const SignUpScreen = ({navigation}) => {
         fullName: fullName,
         userName: username,
         password: password,
+        phone: phone,
         role: 'Nurse', // You can set a default role for new users
       });
 
@@ -68,7 +70,14 @@ const SignUpScreen = ({navigation}) => {
           value={password}
         />
       </View>
-
+      <View style={styles.inputView}>
+        <TextInput
+          placeholder="Phone Number"
+          style={styles.inputText}
+          onChangeText={text => setPhone(text)}
+          value={phone}
+        />
+      </View>
       <TouchableOpacity style={styles.signUpBtn} onPress={handleSignUp}>
         <Text style={styles.signUpText}>Sign Up</Text>
       </TouchableOpacity>
