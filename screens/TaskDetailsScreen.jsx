@@ -220,6 +220,11 @@ const TaskDetailsScreen = ({route, navigation}) => {
     );
     const timestamp = Timestamp.fromDate(combinedDateTime); // Convert to Firestore Timestamp
 
+    if (clientName.length > 30) {
+        Alert.alert('Invalid input', 'Client name is long than 30 characters.');
+        return;
+    }
+
     try {
       await updateDoc(taskRef, {
         taskStatusID: selectedStatus,
@@ -267,6 +272,7 @@ const TaskDetailsScreen = ({route, navigation}) => {
           <TextInput
             style={styles.input}
             value={clientName}
+            maxLength={30}
             onChangeText={setClientName}
           />
 

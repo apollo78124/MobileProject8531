@@ -43,6 +43,11 @@ const ReminderDetailsScreen = ({route, navigation}) => {
     const reminderRef = doc(db, 'reminders', reminder.id);
     const firestoreTimestamp = Timestamp.fromDate(selectedDate); // Convert the date to a Firestore Timestamp
 
+    if (title.length > 50) {
+        Alert.alert('Invalid input', 'Reminder title is long than 50 characters.');
+        return;
+    }
+
     try {
       await updateDoc(reminderRef, {
         message: title,
@@ -61,6 +66,7 @@ const ReminderDetailsScreen = ({route, navigation}) => {
       <TextInput
         style={styles.input}
         value={title}
+        maxLength={50}
         onChangeText={setTitle}
         placeholder="Reminder title"
       />

@@ -95,6 +95,11 @@ const AddTaskScreen = ({navigation}) => {
       return;
     }
 
+    if (clientName.length > 30) {
+        Alert.alert('Invalid input', 'Client name is long than 30 characters.');
+        return;
+    }
+
     try {
       await addDoc(collection(db, 'tasks'), {
         clientName,
@@ -123,6 +128,7 @@ const AddTaskScreen = ({navigation}) => {
         <TextInput
           style={styles.input}
           value={clientName}
+          maxLength={30}
           onChangeText={setClientName}
           placeholder="Enter client name"
         />
