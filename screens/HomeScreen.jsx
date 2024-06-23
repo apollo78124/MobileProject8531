@@ -7,15 +7,18 @@ import TaskDetailsScreen from './TaskDetailsScreen'; // Make sure this component
 import AddTaskScreen from './AddTaskScreen';
 import SettingScreen from './SettingScreen';
 import ContactOthersScreen from './ContactOthers';
+import InstantMessagingScreen from './InstantMessagingScreen';
 import RemindersList from './RemindersList';
 import ReminderDetailsScreen from './ReminderDetailsScreen'; // Make sure this component exists
 import AddReminderScreen from './AddReminderScreen';
 import TaskIcon from '../assets/task_black.png';
 import SettingIcon from '../assets/setting_black.png';
 import ReminderIcon from '../assets/reminder_black.png';
+import ContactIcon from '../assets/contact_black.png';
 import TaskSelectIcon from '../assets/task_blue.png';
 import SettingSelectIcon from '../assets/setting_blue.png';
 import ReminderSelectIcon from '../assets/reminder_blue.png';
+import ContactSelectIcon from '../assets/contact_blue.png';
 import {Image, StyleSheet, View} from 'react-native';
 import {UserContext} from '../UserContext';
 import {db} from '../mockData/config';
@@ -81,6 +84,28 @@ const Settings = ({route, navigation}) => {
         options={{title: 'Settings', headerLeft: null, headerShown: false}}
         initialParams={{user: user}}
       />
+    </Stack.Navigator>
+  ); // Implement your component
+};
+
+const Contact = ({route, navigation}) => {
+  const {params} = route || {};
+  const {user} = params || {};
+
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="ContactOthersScreen"
+        component={ContactOthersScreen}
+        options={{title: 'Contact', headerLeft: null, headerShown: false}}
+        initialParams={{user: user}}
+      />
+      <Stack.Screen
+          name="InstantMessagingScreen"
+          component={InstantMessagingScreen}
+          options={{title: 'InstantMessaging', headerLeft: null, headerShown: false}}
+          initialParams={{user: user}}
+        />
     </Stack.Navigator>
   ); // Implement your component
 };
@@ -185,6 +210,8 @@ const HomeScreen = ({navigation}) => {
               iconName = focused ? ReminderSelectIcon : ReminderIcon;
             } else if (route.name === 'Settings') {
               iconName = focused ? SettingSelectIcon : SettingIcon;
+            } else if (route.name === 'Contact') {
+              iconName = focused ? ContactSelectIcon : ContactIcon;
             }
 
             // You can return any component that you like here!
@@ -209,7 +236,7 @@ const HomeScreen = ({navigation}) => {
         
         <Tab.Screen
           name="Contact"
-          component={ContactOthersScreen}
+          component={Contact}
           initialParams={{user: user}}
         />
       </Tab.Navigator>
