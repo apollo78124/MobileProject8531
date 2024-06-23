@@ -143,6 +143,7 @@ const ContactOthersScreen = ({route, navigation}) => {
           </Picker>
           <Button title="Call" onPress={HandleCallUser} />
           <Button title="Text" onPress={HandleTextUser} />
+          <Button title="Messaging" onPress={() => navigation.navigate('InstantMessagingScreen', {user})} />
         </View>
       </ScrollView>
     </View>
