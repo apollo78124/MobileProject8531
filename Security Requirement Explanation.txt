@@ -1,0 +1,3 @@
+- 
+- Backend shall be SSL enabled
+	We used Firebase DB for our backend. Firebase uses HTTPS protocol as a default protocol, thus it is always SSL enabled. 
