@@ -1,0 +1,11 @@
+My new features in the card are non-functional features.
+
+1. Input Validation / Integrity Constraints to prevent entry of erroneous data.
+(1) Add maxLength property to TextInput component on a few screens, so that there's a maximum length of the entered content
+(2) Add length checking of certain property in submit function, and it gives alert if the content's length is longer than a given value.
+Since (1) is already added, (2) should not happen.
+
+2. Reliable transport i.e. retrying if transport error
+(1) Add a function performWithRetry in mockData.js to implement failure try mechanism
+(2) Apply this function on firebase functions (addDoc, updateDoc, getDocs etc.)
+(3) When there's connection issue of other errors from firebase service, it will retry a configurable times, and the delay time is also configurable.

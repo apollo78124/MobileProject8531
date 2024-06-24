@@ -22,10 +22,15 @@ const AddTaskScreen = ({navigation}) => {
   const [taskTypes, setTaskTypes] = useState([]);
   const [taskStatuses, setTaskStatuses] = useState([]);
   const [clientName, setClientName] = useState('');
-  const [selectedLocationId, setSelectedLocationId] = useState(1);
-  const [selectedTaskTypeId, setSelectedTaskTypeId] = useState(1);
-  const [selectedStatusId, setSelectedStatusId] = useState(1);
+  const [selectedLocationId, setSelectedLocationId] = useState(0);
+  const [selectedTaskTypeId, setSelectedTaskTypeId] = useState(0);
+  const [selectedStatusId, setSelectedStatusId] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+
+  const [isClientValid, setIsClientValid] = useState(true);
+  const [isLocationValid, setIsLocationValid] = useState(true);
+  const [isTaskTypeValid, setIsTaskTypeValid] = useState(true);
+  const [isStatusValid, setIsStatusValid] = useState(true);
 
   // State to store the scheduled date and time
   const [scheduledDate, setScheduledDate] = useState(new Date());
@@ -86,15 +91,52 @@ const AddTaskScreen = ({navigation}) => {
       selectedTaskTypeId,
       selectedStatusId,
     });
+
+    setIsClientValid(true);
+    setIsLocationValid(true);
+    setIsTaskTypeValid(true);
+    setIsStatusValid(true);
+    
     if (
       !clientName ||
       !selectedLocationId ||
       !selectedTaskTypeId ||
       !selectedStatusId
     ) {
-      Alert.alert('Error', 'Please fill all the fields.');
+      if (!clientName) {
+        setIsClientValid(false);
+        Alert.alert('Error', 'Please fill the client name.');
+      }
+
+      if (!clientName) {
+        setIsClientValid(false);
+        Alert.alert('Error', 'Please fill the client name.');
+      }
+  
+      if (!selectedLocationId) {
+        setIsLocationValid(false);
+        Alert.alert('Error', 'Please select the location.');
+      }
+  
+      if (!selectedTaskTypeId) {
+        setIsTaskTypeValid(false);
+        Alert.alert('Error', 'Please select the task type.');
+      }
+  
+      if (!selectedStatusId) {
+        setIsStatusValid(false);
+        Alert.alert('Error', 'Please select status');
+      }
+
       return;
     }
+
+    const regex = /^[A-Za-z\s]+$/;
+
+    if (!regex.test(clientName)) {
+      Alert.alert('Invalid input', 'Client name cannot contains numbers or special characters');
+      return;
+  }
 
     if (clientName.length > 30) {
         Alert.alert('Invalid input', 'Client name is long than 30 characters.');
@@ -125,7 +167,7 @@ const AddTaskScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.section}>Client Name</Text>
+        <Text style={[styles.section, !isClientValid && styles.error1]}>Client Name</Text>
         <TextInput
           style={styles.input}
           value={clientName}
@@ -134,11 +176,16 @@ const AddTaskScreen = ({navigation}) => {
           placeholder="Enter client name"
         />
 
-        <Text style={styles.section}>Location</Text>
+        <Text style={[styles.section, !isLocationValid && styles.error1]}>Location</Text>
         <Picker
           selectedValue={selectedLocationId}
           onValueChange={itemValue => setSelectedLocationId(itemValue)}
           style={styles.picker}>
+            <Picker.Item
+              key={0}
+              label={"Select Location..."}
+              value={0}
+            />
           {locations.map(location => (
             <Picker.Item
               key={location.locationID}
@@ -148,11 +195,16 @@ const AddTaskScreen = ({navigation}) => {
           ))}
         </Picker>
 
-        <Text style={styles.section}>Task Type</Text>
+        <Text style={[styles.section, !isTaskTypeValid && styles.error1]}>Task Type</Text>
         <Picker
           selectedValue={selectedTaskTypeId}
           onValueChange={itemValue => setSelectedTaskTypeId(itemValue)}
-          style={styles.picker}>
+          style={[styles.picker]}>
+            <Picker.Item
+              key={0}
+              label={"Select Task Type..."}
+              value={0}
+            />
           {taskTypes.map(type => (
             <Picker.Item
               key={type.taskTypeID}
@@ -162,11 +214,16 @@ const AddTaskScreen = ({navigation}) => {
           ))}
         </Picker>
 
-        <Text style={styles.section}>Status</Text>
+        <Text style={[styles.section, !isStatusValid && styles.error1]}>Status</Text>
         <Picker
           selectedValue={selectedStatusId}
           onValueChange={itemValue => setSelectedStatusId(itemValue)}
           style={styles.picker}>
+          <Picker.Item
+            key={0}
+            label={"Select Status..."}
+            value={0}
+          />
           {taskStatuses.map(status => (
             <Picker.Item
               key={status.statusID}
@@ -245,6 +302,10 @@ const styles = StyleSheet.create({
   picker: {
     height: 50,
     marginTop: 5,
+    border: 1,
+    borderWidth: 1,
+    borderColor: '#4169E1',
+    borderRadius: 1,
   },
   addButton: {
     backgroundColor: '#4169E1',
@@ -257,6 +318,9 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  error1: {
+    color: 'red',
   },
   // Add other styles as needed
 });
