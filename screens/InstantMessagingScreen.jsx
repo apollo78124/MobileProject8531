@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, TextInput, Button, FlatList, Text, View } from 'react-native';
 import { TextDecoder } from 'text-encoding';
+import {UserContext} from '../UserContext';
 
-const InstantMessaging = () => {
+const InstantMessaging = ({route, navigation}) => {
+
+  const {user} = useContext(UserContext);
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
   const [ws, setWs] = useState(null);
@@ -25,7 +28,7 @@ const InstantMessaging = () => {
       } else {
         newMessage = event.data;
       }
-      setMessages(prevMessages => [...prevMessages, newMessage]);
+      setMessages(prevMessages => [...prevMessages, user.fullName + ': ' + newMessage]);
     };
 
     // Connection closed
@@ -64,6 +67,7 @@ const InstantMessaging = () => {
           value={message}
           onChangeText={setMessage}
           placeholder="Type a message"
+          onSubmitEditing={ () => sendMessage() }
         />
         <Button title="Send" onPress={sendMessage} />
       </View>
