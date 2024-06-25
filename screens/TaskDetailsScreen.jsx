@@ -196,7 +196,7 @@ const TaskDetailsScreen = ({route, navigation}) => {
 
       const newReminder = {
         message: reminderMessage,
-        date_at: Timestamp.now(), // Set this to the desired time
+        date_at: new Date(scheduledDate - 1), // Set this to the desired time
         user: user.id, // Replace with correct user ID if necessary
         type: 'task',
       };
